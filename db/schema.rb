@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109051034) do
+ActiveRecord::Schema.define(version: 20180109054347) do
 
   create_table "divisions", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "models", force: :cascade do |t|
+    t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -30,7 +36,9 @@ ActiveRecord::Schema.define(version: 20180109051034) do
     t.integer "suburb_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "model_id"
     t.index ["division_id"], name: "index_pieces_on_division_id"
+    t.index ["model_id"], name: "index_pieces_on_model_id"
     t.index ["suburb_id"], name: "index_pieces_on_suburb_id"
     t.index ["type_id"], name: "index_pieces_on_type_id"
   end

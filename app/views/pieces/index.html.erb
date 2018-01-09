@@ -14,6 +14,7 @@
       <th>Type</th>
       <th>Division</th>
       <th>Suburb</th>
+      <th>Model</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -30,6 +31,7 @@
         <td><%= piece.type %></td>
         <td><%= piece.division %></td>
         <td><%= piece.suburb %></td>
+        <td><%= piece.model %></td>
         <td><%= link_to 'Show', piece %></td>
         <td><%= link_to 'Edit', edit_piece_path(piece) %></td>
         <td><%= link_to 'Destroy', piece, method: :delete, data: { confirm: 'Are you sure?' } %></td>
