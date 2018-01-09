@@ -4,11 +4,29 @@ class PiecesController < ApplicationController
   # GET /pieces
   # GET /pieces.json
   def index
-    @pieces = if params[:term]
-      Piece.where('description LIKE ?', "%#{params[:term]}%")
-    else
-      Piece.all
+    scope = Piece
+
+    if (params[:query].present?)
+      scope = scope.where([ 'description LIKE ? OR gis_identifier LIKE ?', "%#{params[:query]}%", "%#{params[:query]}%" ])
     end
+
+    if (params[:type_id].present?)
+      scope = scope.where(:type_id => params[:type_id])
+    end
+
+    if (params[:division_id].present?)
+      scope = scope.where(:division_id => params[:division_id])
+    end
+
+    if (params[:suburb_id].present?)
+      scope = scope.where(:suburb_id => params[:suburb_id])
+    end
+
+    if (params[:model_id].present?)
+      scope = scope.where(:model_id => params[:model_id])
+    end
+
+    @pieces = scope.includes(:type, :division, :suburb, :model ).all
   end
 
   # GET /pieces/1

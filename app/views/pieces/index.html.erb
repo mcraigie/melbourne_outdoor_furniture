@@ -3,45 +3,47 @@
 <h1>Pieces</h1>
 
 <%= form_tag(pieces_path, method: :get, enforce_utf8: false) do %>
-  <%= text_field_tag :term, params[:term] %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= select_tag "type_id", options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]), :prompt => "Any Type" %>
+  <%= select_tag "division_id", options_from_collection_for_select(Division.all, "id", "name", params[:division_id]), :prompt => "Any Division" %>
+  <%= select_tag "suburb_id", options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]), :prompt => "Any Suburb" %>
+  <%= select_tag "model_id", options_from_collection_for_select(Model.all, "id", "number", params[:model_id]), :prompt => "Any Model" %>
   <%= submit_tag 'Search', name: nil %>
 <% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Gis Identifier</th>
-      <th>Condition</th>
-      <th>Evaluated</th>
-      <th>Lat</th>
-      <th>Long</th>
-      <th>Type</th>
-      <th>Division</th>
-      <th>Suburb</th>
-      <th>Model</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @pieces.each do |piece| %>
+<br>
+<% if @pieces.blank? %>
+  <h4>There are no pieces matching your search</h4>
+<% else %>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to piece.description, piece %></td>
-        <td><%= link_to piece.gis_identifier, piece %></td>
-        <td><%= piece.condition %></td>
-        <td><%= piece.evaluated %></td>
-        <td><%= piece.lat %></td>
-        <td><%= piece.long %></td>
-        <td><%= link_to piece.type.name, piece.type %></td>
-        <td><%= link_to piece.division.name, piece.division %></td>
-        <td><%= link_to piece.suburb.name, piece.suburb %></td>
-        <td><%= link_to piece.model.number, piece.model %></td>
+        <th>GIS ID</th>
+        <th>Description</th>
+        <th>Condition</th>
+        <th>Evaluated</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Division</th>
+        <th>Suburb</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @pieces.each do |piece| %>
+        <tr>
+          <td><%= link_to piece.gis_identifier, piece %></td>
+          <td><%= link_to piece.description, piece %></td>
+          <td><%= piece.condition %></td>
+          <td><%= piece.evaluated %></td>
+          <td><%= link_to piece.type.name, :controller => "pieces", :type_id => piece.type %></td>
+          <td><%= link_to piece.model.number, :controller => "pieces", :model_id => piece.model %></td>
+          <td><%= link_to piece.division.name, :controller => "pieces", :division_id => piece.division %></td>
+          <td><%= link_to piece.suburb.name, :controller => "pieces", :suburb_id => piece.suburb %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <br>
 
-<%= link_to 'New Piece', new_piece_path %>
