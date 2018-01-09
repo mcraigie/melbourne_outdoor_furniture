@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pieces
   resources :suburbs
   resources :divisions
   resources :types

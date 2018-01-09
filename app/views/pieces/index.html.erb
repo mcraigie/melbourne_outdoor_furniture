@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pieces</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Gis</th>
+      <th>Condition</th>
+      <th>Evaluated</th>
+      <th>Lat</th>
+      <th>Long</th>
+      <th>Type</th>
+      <th>Division</th>
+      <th>Suburb</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pieces.each do |piece| %>
+      <tr>
+        <td><%= piece.description %></td>
+        <td><%= piece.gis_id %></td>
+        <td><%= piece.condition %></td>
+        <td><%= piece.evaluated %></td>
+        <td><%= piece.lat %></td>
+        <td><%= piece.long %></td>
+        <td><%= piece.type %></td>
+        <td><%= piece.division %></td>
+        <td><%= piece.suburb %></td>
+        <td><%= link_to 'Show', piece %></td>
+        <td><%= link_to 'Edit', edit_piece_path(piece) %></td>
+        <td><%= link_to 'Destroy', piece, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Piece', new_piece_path %>

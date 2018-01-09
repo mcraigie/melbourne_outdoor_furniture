@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @piece.description %>
+</p>
+
+<p>
+  <strong>Gis:</strong>
+  <%= @piece.gis_id %>
+</p>
+
+<p>
+  <strong>Condition:</strong>
+  <%= @piece.condition %>
+</p>
+
+<p>
+  <strong>Evaluated:</strong>
+  <%= @piece.evaluated %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @piece.lat %>
+</p>
+
+<p>
+  <strong>Long:</strong>
+  <%= @piece.long %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @piece.type %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @piece.division %>
+</p>
+
+<p>
+  <strong>Suburb:</strong>
+  <%= @piece.suburb %>
+</p>
+
+<%= link_to 'Edit', edit_piece_path(@piece) %> |
+<%= link_to 'Back', pieces_path %>

@@ -1,0 +1,62 @@
+<%= form_with(model: piece, local: true) do |form| %>
+  <% if piece.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(piece.errors.count, "error") %> prohibited this piece from being saved:</h2>
+
+      <ul>
+      <% piece.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :piece_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gis_id %>
+    <%= form.number_field :gis_id, id: :piece_gis_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :condition %>
+    <%= form.text_field :condition, id: :piece_condition %>
+  </div>
+
+  <div class="field">
+    <%= form.label :evaluated %>
+    <%= form.date_select :evaluated, id: :piece_evaluated %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lat %>
+    <%= form.text_field :lat, id: :piece_lat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :long %>
+    <%= form.text_field :long, id: :piece_long %>
+  </div>
+
+  <div class="field">
+    <%= form.label :type_id %>
+    <%= form.text_field :type_id, id: :piece_type_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :division_id %>
+    <%= form.text_field :division_id, id: :piece_division_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :suburb_id %>
+    <%= form.text_field :suburb_id, id: :piece_suburb_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
