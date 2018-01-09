@@ -65,7 +65,6 @@ class DivisionsController < ApplicationController
         format.json { head :no_content, status: :unprocessable_entity }
       end
     end
-
   end
 
   private

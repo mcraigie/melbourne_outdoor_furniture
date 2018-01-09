@@ -4,7 +4,11 @@ class PiecesController < ApplicationController
   # GET /pieces
   # GET /pieces.json
   def index
-    @pieces = Piece.all
+    @pieces = if params[:term]
+      Piece.where('description LIKE ?', "%#{params[:term]}%")
+    else
+      Piece.all
+    end
   end
 
   # GET /pieces/1
@@ -75,6 +79,6 @@ class PiecesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def piece_params
-      params.require(:piece).permit(:description, :gis_identifier, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id, :model_id)
+      params.require(:piece).permit(:description, :gis_identifier, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id, :model_id, :term)
     end
 end

@@ -2,6 +2,11 @@
 
 <h1>Pieces</h1>
 
+<%= form_tag(pieces_path, method: :get, enforce_utf8: false) do %>
+  <%= text_field_tag :term, params[:term] %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -22,19 +27,16 @@
   <tbody>
     <% @pieces.each do |piece| %>
       <tr>
-        <td><%= piece.description %></td>
-        <td><%= piece.gis_identifier %></td>
+        <td><%= link_to piece.description, piece %></td>
+        <td><%= link_to piece.gis_identifier, piece %></td>
         <td><%= piece.condition %></td>
         <td><%= piece.evaluated %></td>
         <td><%= piece.lat %></td>
         <td><%= piece.long %></td>
-        <td><%= piece.type %></td>
-        <td><%= piece.division %></td>
-        <td><%= piece.suburb %></td>
-        <td><%= piece.model %></td>
-        <td><%= link_to 'Show', piece %></td>
-        <td><%= link_to 'Edit', edit_piece_path(piece) %></td>
-        <td><%= link_to 'Destroy', piece, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to piece.type.name, piece.type %></td>
+        <td><%= link_to piece.division.name, piece.division %></td>
+        <td><%= link_to piece.suburb.name, piece.suburb %></td>
+        <td><%= link_to piece.model.number, piece.model %></td>
       </tr>
     <% end %>
   </tbody>

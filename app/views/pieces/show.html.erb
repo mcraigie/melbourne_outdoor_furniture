@@ -32,23 +32,22 @@
 
 <p>
   <strong>Type:</strong>
-  <%= @piece.type %>
+  <%= @piece.type.name %>
 </p>
 
 <p>
   <strong>Division:</strong>
-  <%= @piece.division %>
+  <%= @piece.division.name %>
 </p>
 
 <p>
   <strong>Suburb:</strong>
-  <%= @piece.suburb %>
+  <%= @piece.suburb.name %>
 </p>
 
 <p>
   <strong>Model:</strong>
-  <%= @piece.model %>
+  <%= @piece.model.number %>
 </p>
 
-<%= link_to 'Edit', edit_piece_path(@piece) %> |
 <%= link_to 'Back', pieces_path %>
