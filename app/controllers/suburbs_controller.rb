@@ -54,10 +54,16 @@ class SuburbsController < ApplicationController
   # DELETE /suburbs/1
   # DELETE /suburbs/1.json
   def destroy
-    @suburb.destroy
-    respond_to do |format|
-      format.html { redirect_to suburbs_url, notice: 'Suburb was successfully destroyed.' }
-      format.json { head :no_content }
+    if @suburbs.destroy
+      respond_to do |format|
+        format.html { redirect_to suburbs_url, notice: 'Suburb was successfully destroyed.' }
+        format.json { head :ok, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to suburbs_url }
+        format.json { head :no_content, status: :unprocessable_entity }
+      end
     end
   end
 

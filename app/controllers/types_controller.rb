@@ -54,10 +54,16 @@ class TypesController < ApplicationController
   # DELETE /types/1
   # DELETE /types/1.json
   def destroy
-    @type.destroy
-    respond_to do |format|
-      format.html { redirect_to types_url, notice: 'Type was successfully destroyed.' }
-      format.json { head :no_content }
+    if @type.destroy
+      respond_to do |format|
+        format.html { redirect_to type_url, notice: 'Type was successfully destroyed.' }
+        format.json { head :ok, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to type_url }
+        format.json { head :no_content, status: :unprocessable_entity }
+      end
     end
   end
 
