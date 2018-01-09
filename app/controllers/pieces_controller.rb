@@ -7,7 +7,7 @@ class PiecesController < ApplicationController
     scope = Piece
 
     if (params[:query].present?)
-      scope = scope.where([ 'description LIKE ? OR gis_identifier LIKE ?', "%#{params[:query]}%", "%#{params[:query]}%" ])
+      scope = scope.where(['description LIKE ? OR gis_identifier LIKE ?', "%#{params[:query]}%", "%#{params[:query]}%"])
     end
 
     if (params[:type_id].present?)
@@ -26,7 +26,7 @@ class PiecesController < ApplicationController
       scope = scope.where(:model_id => params[:model_id])
     end
 
-    @pieces = scope.includes(:type, :division, :suburb, :model ).all
+    @pieces = scope.includes(:type, :division, :suburb, :model).all
   end
 
   # GET /pieces/1
@@ -90,13 +90,14 @@ class PiecesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_piece
-      @piece = Piece.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def piece_params
-      params.require(:piece).permit(:description, :gis_identifier, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id, :model_id, :term)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_piece
+    @piece = Piece.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def piece_params
+    params.require(:piece).permit(:description, :gis_identifier, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id, :model_id, :term)
+  end
 end
