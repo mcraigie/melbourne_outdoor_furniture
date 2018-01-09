@@ -69,6 +69,6 @@ class PiecesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def piece_params
-      params.require(:piece).permit(:description, :gis_id, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id)
+      params.require(:piece).permit(:description, :gis_identifier, :condition, :evaluated, :lat, :long, :type_id, :division_id, :suburb_id)
     end
 end
