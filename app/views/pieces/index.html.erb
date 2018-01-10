@@ -3,28 +3,58 @@
 <h1>Pieces</h1>
 
 <%= form_tag(pieces_path, method: :get, enforce_utf8: false) do %>
-  <%= text_field_tag :query, params[:query] %>
-  <%= select_tag "type_id", options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]), :prompt => "Any Type" %>
-  <%= select_tag "division_id", options_from_collection_for_select(Division.all, "id", "name", params[:division_id]), :prompt => "Any Division" %>
-  <%= select_tag "suburb_id", options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]), :prompt => "Any Suburb" %>
-  <%= select_tag "model_id", options_from_collection_for_select(Model.all, "id", "number", params[:model_id]), :prompt => "Any Model" %>
-  <%= submit_tag 'Search', name: nil %>
+  <%=
+    text_field_tag :query, 
+    params[:query]
+  %>
+  <%=
+    select_tag "type_id",
+    options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]),
+    :prompt => "Any Type" %>
+  <%=
+    select_tag "division_id",
+    options_from_collection_for_select(Division.all, "id", "name", params[:division_id]),
+    :prompt => "Any Division"
+  %>
+  <%=
+    select_tag "suburb_id",
+    options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]),
+    :prompt => "Any Suburb"
+  %>
+  <%=
+    select_tag "model_id",
+    options_from_collection_for_select(Model.all, "id", "number", params[:model_id]),
+    :prompt => "Any Model"
+  %>
+  <%=
+    submit_tag 'Search',
+    name: nil
+  %>
 <% end %>
+
 <br>
+
+
+
 <% if @pieces.blank? %>
   <h4>There are no pieces matching your search</h4>
 <% else %>
   <table>
     <thead>
       <tr>
-        <th>GIS ID</th>
-        <th>Description</th>
-        <th>Condition</th>
-        <th>Evaluated</th>
-        <th>Type</th>
-        <th>Model</th>
-        <th>Division</th>
-        <th>Suburb</th>
+        <% piece_fields.each do |_, f| %>
+          <td>
+          <% sorting_by_field = params[:sort_by] == f[:symbol_string]%>
+          <% indicator = sorting_by_field ? "  #{sort_arrow(params[:sort_dir])}": ''%>
+            <%=
+              link_to "#{f[:title]}#{indicator}",
+              request.query_parameters.merge({
+                :sort_by => f[:symbol_string],
+                :sort_dir => (sorting_by_field ? invert(params[:sort_dir]) : :ASC)
+              })
+            %>
+          </td>
+        <% end %>
       </tr>
     </thead>
 
@@ -35,15 +65,36 @@
           <td><%= link_to piece.description, piece %></td>
           <td><%= piece.condition %></td>
           <td><%= piece.evaluated %></td>
-          <td><%= link_to piece.type.name, :controller => "pieces", :type_id => piece.type %></td>
-          <td><%= link_to piece.model.number, :controller => "pieces", :model_id => piece.model %></td>
-          <td><%= link_to piece.division.name, :controller => "pieces", :division_id => piece.division %></td>
-          <td><%= link_to piece.suburb.name, :controller => "pieces", :suburb_id => piece.suburb %></td>
+          <td>
+            <%=
+              link_to piece.type.name,
+              :controller => "pieces",
+              :type_id => piece.type
+            %>
+          </td>
+          <td>
+            <%=
+              link_to piece.model.number,
+              :controller => "pieces",
+              :model_id => piece.model
+            %>
+          </td>
+          <td>
+            <%=
+              link_to piece.division.name,
+              :controller => "pieces",
+              :division_id => piece.division
+            %>
+          </td>
+          <td>
+            <%=
+              link_to piece.suburb.name,
+              :controller => "pieces",
+              :suburb_id => piece.suburb
+            %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
-
-<br>
-

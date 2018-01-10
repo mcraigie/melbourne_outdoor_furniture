@@ -18,6 +18,8 @@ class PiecesController < ApplicationController
       scope = scope.where(param => params[param]) if params[param].present?
     end
 
+    scope = scope.order(params[:sort_by] => params[:sort_dir] || :ASC) if params[:sort_by].present?
+
     @pieces = scope.includes(:type, :division, :suburb, :model).all
   end
 
