@@ -28,7 +28,7 @@ class PiecesController < ApplicationController
             elsif other_sortable_fields.include?(search_params[:sort_by])
               scope.order(search_params[:sort_by] => search_params[:sort_dir] || 'ASC')
             else
-              scope.order(gis_identifier: search_params[:sort_dir] || 'ASC')
+              scope.order(gis_identifier: 'ASC')
             end
 
     @pieces = scope.all
