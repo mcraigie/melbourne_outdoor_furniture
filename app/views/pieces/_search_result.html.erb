@@ -1,0 +1,34 @@
+<tr>
+  <td><%= link_to piece.gis_identifier, piece %></td>
+  <td><%= link_to piece.description, piece %></td>
+  <td><%= piece.condition %></td>
+  <td><%= piece.evaluated %></td>
+  <td>
+    <%=
+      link_to piece.type.name,
+      :controller => "pieces",
+      :type_id => piece.type
+    %>
+  </td>
+  <td>
+    <%=
+      link_to piece.model.name,
+      :controller => "pieces",
+      :model_id => piece.model
+    %>
+  </td>
+  <td>
+    <%=
+      link_to piece.division.name,
+      :controller => "pieces",
+      :division_id => piece.division
+    %>
+  </td>
+  <td>
+    <%=
+      link_to piece.suburb.name,
+      :controller => "pieces",
+      :suburb_id => piece.suburb
+    %>
+  </td>
+</tr>

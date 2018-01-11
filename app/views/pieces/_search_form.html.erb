@@ -1,0 +1,35 @@
+<%= form_tag(pieces_path, method: :get, enforce_utf8: false) do %>
+  <%=
+    text_field_tag :query, 
+    params[:query]
+  %>
+  <%=
+    select_tag "type_id",
+    options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]),
+    :prompt => "Any Type" %>
+  <%=
+    select_tag "division_id",
+    options_from_collection_for_select(Division.all, "id", "name", params[:division_id]),
+    :prompt => "Any Division"
+  %>
+  <%=
+    select_tag "suburb_id",
+    options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]),
+    :prompt => "Any Suburb"
+  %>
+  <%=
+    select_tag "model_id",
+    options_from_collection_for_select(Model.all, "id", "name", params[:model_id]),
+    :prompt => "Any Model"
+  %>
+  <%= hidden_field_tag :sort_by, params[:sort_by] %>
+  <%= hidden_field_tag :sort_dir, params[:sort_dir] %>
+  <%=
+    submit_tag 'Search',
+    name: nil
+  %>
+  <%=
+    link_to "Reset",
+    :controller => "pieces"
+  %>
+<% end %>

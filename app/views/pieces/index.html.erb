@@ -2,41 +2,7 @@
 
 <h1>Pieces</h1>
 
-<%= form_tag(pieces_path, method: :get, enforce_utf8: false) do %>
-  <%=
-    text_field_tag :query, 
-    params[:query]
-  %>
-  <%=
-    select_tag "type_id",
-    options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]),
-    :prompt => "Any Type" %>
-  <%=
-    select_tag "division_id",
-    options_from_collection_for_select(Division.all, "id", "name", params[:division_id]),
-    :prompt => "Any Division"
-  %>
-  <%=
-    select_tag "suburb_id",
-    options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]),
-    :prompt => "Any Suburb"
-  %>
-  <%=
-    select_tag "model_id",
-    options_from_collection_for_select(Model.all, "id", "name", params[:model_id]),
-    :prompt => "Any Model"
-  %>
-  <%= hidden_field_tag :sort_by, params[:sort_by] %>
-  <%= hidden_field_tag :sort_dir, params[:sort_dir] %>
-  <%=
-    submit_tag 'Search',
-    name: nil
-  %>
-  <%=
-    link_to "Reset",
-    :controller => "pieces"
-  %>
-<% end %>
+<%= render 'search_form' %>
 
 <br>
 
@@ -64,40 +30,7 @@
 
     <tbody>
       <% @pieces.each do |piece| %>
-        <tr>
-          <td><%= link_to piece.gis_identifier, piece %></td>
-          <td><%= link_to piece.description, piece %></td>
-          <td><%= piece.condition %></td>
-          <td><%= piece.evaluated %></td>
-          <td>
-            <%=
-              link_to piece.type.name,
-              :controller => "pieces",
-              :type_id => piece.type
-            %>
-          </td>
-          <td>
-            <%=
-              link_to piece.model.name,
-              :controller => "pieces",
-              :model_id => piece.model
-            %>
-          </td>
-          <td>
-            <%=
-              link_to piece.division.name,
-              :controller => "pieces",
-              :division_id => piece.division
-            %>
-          </td>
-          <td>
-            <%=
-              link_to piece.suburb.name,
-              :controller => "pieces",
-              :suburb_id => piece.suburb
-            %>
-          </td>
-        </tr>
+        <%= render 'search_result', piece: piece %>
       <% end %>
     </tbody>
   </table>
