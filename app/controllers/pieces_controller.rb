@@ -15,9 +15,9 @@ class PiecesController < ApplicationController
     end
 
     associated_models = %i[type division suburb model]
-    sortable_fields = %w[description gis_identifier condition evaluated created_at updated_at]
+    other_sortable_fields = %w[description gis_identifier condition evaluated created_at updated_at]
 
-    associated_models.map { |m| "#{m.to_s}_id"}.each do |model|
+    associated_models.map { |m| "#{m}_id" }.each do |model|
       scope = scope.where(model => search_params[model]) if search_params[model].present?
     end
 
@@ -25,10 +25,10 @@ class PiecesController < ApplicationController
 
     scope = if associated_models.map(&:to_s).include?(search_params[:sort_by])
               scope.order("#{search_params[:sort_by]}s.name #{search_params[:sort_dir]}")
-            elsif sortable_fields.include?(search_params[:sort_by])
+            elsif other_sortable_fields.include?(search_params[:sort_by])
               scope.order(search_params[:sort_by] => search_params[:sort_dir] || 'ASC')
             else
-              scope.order(gis_identifier: search_params[:sort_5dir] || 'ASC')
+              scope.order(gis_identifier: search_params[:sort_dir] || 'ASC')
             end
 
     @pieces = scope.all
