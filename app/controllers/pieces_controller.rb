@@ -6,11 +6,11 @@ class PiecesController < ApplicationController
   def index
     scope = Piece
 
-    if params[:query].present?
+    if search_params[:query].present?
       scope = scope.where([
                             'description LIKE ? OR gis_identifier LIKE ?',
-                            "%#{params[:query]}%",
-                            "%#{params[:query]}%"
+                            "%#{search_params[:query]}%",
+                            "%#{search_params[:query]}%"
                           ])
     end
 
@@ -18,17 +18,17 @@ class PiecesController < ApplicationController
     sortable_fields = %w[description gis_identifier condition evaluated created_at updated_at]
 
     associated_models.each do |model|
-      scope = scope.where(model => params[model]) if params[model].present?
+      scope = scope.where(model => search_params[model]) if search_params[model].present?
     end
 
     scope = scope.includes(associated_models)
 
-    scope = if params[:sort_by].present? && associated_models.include?(params[:sort_by].to_sym)
-              scope.order("#{params[:sort_by]}s.name #{params[:sort_dir]}")
-            elsif sortable_fields.include?(params[:sort_by])
-              scope.order(params[:sort_by].to_sym => params[:sort_dir] || 'ASC')
+    scope = if associated_models.map(&:to_s).include?(search_params[:sort_by])
+              scope.order("#{search_params[:sort_by]}s.name #{search_params[:sort_dir]}")
+            elsif sortable_fields.include?(search_params[:sort_by])
+              scope.order(search_params[:sort_by] => search_params[:sort_dir] || 'ASC')
             else
-              scope.order(gis_identifier: params[:sort_dir] || 'ASC')
+              scope.order(gis_identifier: search_params[:sort_5dir] || 'ASC')
             end
 
     @pieces = scope.all
@@ -113,5 +113,22 @@ class PiecesController < ApplicationController
                                     suburb_id
                                     model_id
                                   ])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def search_params
+    params.permit(%i[
+                    description
+                    gis_identifier
+                    condition
+                    evaluated
+                    type
+                    division
+                    suburb
+                    model
+                    query
+                    sort_by
+                    sort_dir
+                  ])
   end
 end
