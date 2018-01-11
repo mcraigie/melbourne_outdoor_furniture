@@ -11,7 +11,7 @@ File.read("./data/divisions.txt").each_line do |line|
 end
 
 File.read("./data/models.txt").each_line do |line|
-  Model.create!(number: line.strip)
+  Model.create!(name: line.strip)
 end
 
 File.read("./data/suburbs.txt").each_line do |line|
@@ -22,7 +22,7 @@ CSV.foreach("./data/subset_outdoor_furniture.csv", :headers => true) do |row|
   row = row.to_hash
   row['type'] = Type.find_by(name: row['type'])
   row['division'] = Division.find_by(name: row['division'])
-  row['model'] = Model.find_by(number: row['model'])
+  row['model'] = Model.find_by(name: row['model'])
   row['suburb'] = Suburb.find_by(name: row['suburb'])
   Piece.create!(row)
 end

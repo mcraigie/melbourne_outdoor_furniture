@@ -14,13 +14,24 @@ class PiecesController < ApplicationController
                           ])
     end
 
-    %i[type_id division_id suburb_id model_id].each do |param|
-      scope = scope.where(param => params[param]) if params[param].present?
+    associated_models = %i[type division suburb model]
+    sortable_fields = %w[description gis_identifier condition evaluated created_at updated_at]
+
+    associated_models.each do |model|
+      scope = scope.where(model => params[model]) if params[model].present?
     end
 
-    scope = scope.order(params[:sort_by] => params[:sort_dir] || :ASC) if params[:sort_by].present?
+    scope = scope.includes(associated_models)
 
-    @pieces = scope.includes(:type, :division, :suburb, :model).all
+    scope = if params[:sort_by].present? && associated_models.include?(params[:sort_by].to_sym)
+              scope.order("#{params[:sort_by]}s.name #{params[:sort_dir]}")
+            elsif sortable_fields.include?(params[:sort_by])
+              scope.order(params[:sort_by].to_sym => params[:sort_dir] || 'ASC')
+            else
+              scope.order(gis_identifier: params[:sort_dir] || 'ASC')
+            end
+
+    @pieces = scope.all
   end
 
   # GET /pieces/1

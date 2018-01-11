@@ -8,22 +8,22 @@
     params[:query]
   %>
   <%=
-    select_tag "type_id",
-    options_from_collection_for_select(Type.all, 'id', 'name', params[:type_id]),
+    select_tag "type",
+    options_from_collection_for_select(Type.all, 'id', 'name', params[:type]),
     :prompt => "Any Type" %>
   <%=
-    select_tag "division_id",
-    options_from_collection_for_select(Division.all, "id", "name", params[:division_id]),
+    select_tag "division",
+    options_from_collection_for_select(Division.all, "id", "name", params[:division]),
     :prompt => "Any Division"
   %>
   <%=
-    select_tag "suburb_id",
-    options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb_id]),
+    select_tag "suburb",
+    options_from_collection_for_select(Suburb.all, "id", "name", params[:suburb]),
     :prompt => "Any Suburb"
   %>
   <%=
-    select_tag "model_id",
-    options_from_collection_for_select(Model.all, "id", "number", params[:model_id]),
+    select_tag "model",
+    options_from_collection_for_select(Model.all, "id", "name", params[:model]),
     :prompt => "Any Model"
   %>
   <%=
@@ -44,12 +44,12 @@
       <tr>
         <% piece_fields.each do |_, f| %>
           <td>
-          <% sorting_by_field = params[:sort_by] == f[:symbol_string]%>
+          <% sorting_by_field = params[:sort_by] == f[:query_string]%>
           <% indicator = sorting_by_field ? "  #{sort_arrow(params[:sort_dir])}": ''%>
             <%=
               link_to "#{f[:title]}#{indicator}",
               request.query_parameters.merge({
-                :sort_by => f[:symbol_string],
+                :sort_by => f[:query_string],
                 :sort_dir => (sorting_by_field ? invert(params[:sort_dir]) : :ASC)
               })
             %>
@@ -74,7 +74,7 @@
           </td>
           <td>
             <%=
-              link_to piece.model.number,
+              link_to piece.model.name,
               :controller => "pieces",
               :model_id => piece.model
             %>
