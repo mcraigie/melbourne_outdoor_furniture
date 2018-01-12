@@ -21,16 +21,6 @@
 </p>
 
 <p>
-  <strong>Lat:</strong>
-  <%= @piece.lat %>
-</p>
-
-<p>
-  <strong>Long:</strong>
-  <%= @piece.long %>
-</p>
-
-<p>
   <strong>Type:</strong>
   <%= @piece.type.name %>
 </p>
@@ -49,5 +39,7 @@
   <strong>Model:</strong>
   <%= @piece.model.name %>
 </p>
+
+<%= render 'map' %>
 
 <%= link_to 'Back', pieces_path %>

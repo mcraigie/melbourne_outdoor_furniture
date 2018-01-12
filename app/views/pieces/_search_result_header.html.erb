@@ -1,0 +1,17 @@
+<thead>
+  <tr>
+    <% piece_fields.each do |_, f| %>
+      <td>
+      <% sorting_by_field = params[:sort_by] == f[:query_string]%>
+      <% indicator = sorting_by_field ? "  #{sort_arrow(params[:sort_dir])}": ''%>
+        <%=
+          link_to "#{f[:title]}#{indicator}",
+          request.query_parameters.merge({
+            :sort_by => f[:query_string],
+            :sort_dir => (sorting_by_field ? invert(params[:sort_dir]) : 'ASC')
+          })
+        %>
+      </td>
+    <% end %>
+  </tr>
+</thead>
