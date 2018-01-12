@@ -40,6 +40,9 @@
   <%= @piece.model.name %>
 </p>
 
+<script>window.lat = <%= @piece.lat %></script>
+<script>window.long = <%= @piece.long %></script>
+
 <div id="piece_map"></div>
 
 <%= link_to 'Back', pieces_path %>

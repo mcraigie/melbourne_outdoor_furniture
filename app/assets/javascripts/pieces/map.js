@@ -4,7 +4,8 @@ document.addEventListener("turbolinks:load", function() {
       window.map.remove();
     }
 
-    window.map = L.map("piece_map").setView([-37.7963542907, 144.9422114219], 13);
+    window.map = L.map("piece_map").setView([window.lat, window.long], 13);
+    L.marker([window.lat, window.long]).addTo(window.map);
 
     L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
       attribution:
