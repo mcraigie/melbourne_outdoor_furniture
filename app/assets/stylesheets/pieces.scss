@@ -3,6 +3,23 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #piece_map {
-  height: 20vw;
-  width: 25vw;
+  height: 100%;
+  width: 100%;
+}
+
+#piece {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  border: 1px black;
+  height: 100%;
+}
+
+#details {
+  background-color: yellow;
+  padding: 10%;
+  border: 1px solid black;
+}
+
+body {
+  height: 100%;
 }

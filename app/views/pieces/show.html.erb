@@ -1,48 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div id="piece">
+  <div id="details">
+    <p>
+      <strong>GIS Identifier:</strong>
+      <%= @piece.gis_identifier %>
+    </p>
 
-<p>
-  <strong>GIS Identifier:</strong>
-  <%= @piece.gis_identifier %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @piece.description %>
+    </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @piece.description %>
-</p>
+    <p>
+      <strong>Condition:</strong>
+      <%= @piece.condition %>
+    </p>
 
-<p>
-  <strong>Condition:</strong>
-  <%= @piece.condition %>
-</p>
+    <p>
+      <strong>Evaluated:</strong>
+      <%= @piece.evaluated %>
+    </p>
 
-<p>
-  <strong>Evaluated:</strong>
-  <%= @piece.evaluated %>
-</p>
+    <p>
+      <strong>Type:</strong>
+      <%= @piece.type.name %>
+    </p>
 
-<p>
-  <strong>Type:</strong>
-  <%= @piece.type.name %>
-</p>
+    <p>
+      <strong>Division:</strong>
+      <%= @piece.division.name %>
+    </p>
 
-<p>
-  <strong>Division:</strong>
-  <%= @piece.division.name %>
-</p>
+    <p>
+      <strong>Suburb:</strong>
+      <%= @piece.suburb.name %>
+    </p>
 
-<p>
-  <strong>Suburb:</strong>
-  <%= @piece.suburb.name %>
-</p>
+    <p>
+      <strong>Model:</strong>
+      <%= @piece.model.name %>
+    </p>
+  </div>
 
-<p>
-  <strong>Model:</strong>
-  <%= @piece.model.name %>
-</p>
+  <script>window.lat = <%= @piece.lat %></script>
+  <script>window.long = <%= @piece.long %></script>
+  <div id="piece_map"></div>
+</div>
 
-<script>window.lat = <%= @piece.lat %></script>
-<script>window.long = <%= @piece.long %></script>
-
-<div id="piece_map"></div>
-
-<%= link_to 'Back', pieces_path %>
+<%= link_to 'Back to Search', pieces_path %>
