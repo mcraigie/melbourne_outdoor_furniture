@@ -1,5 +1,7 @@
 {
   "name": "melbourne_furniture",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "leaflet": "^1.2.0"
+  }
 }
